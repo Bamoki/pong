@@ -15,8 +15,8 @@ namespace pl{
                 processEvents(ev);
             }
 
-           void processEvents(SDL_Event ev,bool pe){
-                if(pe == true){
+           void processEvents(SDL_Event ev){
+
                     if(ev.type == SDL_KEYDOWN){
                         
                         if(ev.key.keysym.sym == SDLK_w){
@@ -36,12 +36,13 @@ namespace pl{
                             up = false;
                             down = false;
                         }
-                   }
+
             }    
 
             void update(){
                 if(up == true){
                     rect.y -= 10;
+                    
                 }
                 if(down == true){
                     rect.y += 10;
@@ -49,12 +50,8 @@ namespace pl{
             }
             
             void render(){
-                SDL_RenderClear(renderer);
-
-                SDL_SetRenderDrawColor(renderer,255,255,255,255);
+                SDL_SetRenderDrawColor(renderer,255,0,0,255);
                 SDL_RenderFillRect(renderer,&rect);
-
-                SDL_RenderPresent(renderer);
             }
 
             void collisionDetect(SDL_Rect col){
@@ -67,6 +64,7 @@ namespace pl{
             bool up;
             bool down;
             bool x;
+            bool pe;
             SDL_Renderer* renderer;
     };
 }
