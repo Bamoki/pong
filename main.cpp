@@ -18,7 +18,6 @@ SDL_Renderer* renderer = 0;
 
 // variables para el main
 bool run = true;
-TTF_Font* font = TTF_OpenFont("fonts/MulaR-SemiLightItalic.otf",20);
 
 int main(int argc, char* args[]){
     // quitar el keydelay
@@ -33,7 +32,6 @@ int main(int argc, char* args[]){
         return 0;
     }
     
-    
     TTF_Font* font = TTF_OpenFont("fonts/MulaR-SemiLightItalic.otf",20);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 
@@ -42,8 +40,6 @@ int main(int argc, char* args[]){
     ba::Engine engine;
 
     SDL_Color colorT = {255,255,255};
-
-    std::string h = "hola";
     SDL_Event ev;
 
     while(run){
@@ -56,18 +52,18 @@ int main(int argc, char* args[]){
             player.processEvents(ev);
         }
 
-
-        player.update();
+        // actualizar objetos
         enemy.update();
+        player.update();
+
+        player.collisionDetect(enemy);
 
         SDL_SetRenderDrawColor(renderer,0,0,0,255);
         SDL_RenderClear(renderer);
 
-        player.render();
+        //renderizar objetos
         enemy.render();
-
-        engine.TextScreen(colorT,h,renderer,font);
-
+        player.render();
         SDL_RenderPresent(renderer);
         
     }   

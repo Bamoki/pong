@@ -2,6 +2,15 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "enemy.hpp"
+#include "Engine.hpp"
+
+ba::Engine engine;
+SDL_Color color;
+
+
+
+
 namespace pl{
     class Player{
         public:
@@ -13,6 +22,9 @@ namespace pl{
                 rect.x = 100;
                 rect.y = 100;
                 processEvents(ev);
+
+                TTF_Init();
+                TTF_Font* font = TTF_OpenFont("fonts/MulaR-SemiLightItalic.otf",20);
             }
 
            void processEvents(SDL_Event ev){
@@ -40,6 +52,8 @@ namespace pl{
             }    
 
             void update(){
+                x = rect.x;
+                y = rect.y;
                 if(up == true){
                     rect.y -= 10;
                     
@@ -50,21 +64,33 @@ namespace pl{
             }
             
             void render(){
-                SDL_SetRenderDrawColor(renderer,255,0,0,255);
+                SDL_SetRenderDrawColor(renderer,255,255,255,255);
                 SDL_RenderFillRect(renderer,&rect);
             }
 
-            void collisionDetect(SDL_Rect col){
+            SDL_Rect GetBoundingBox() const{
+                return rect;
+            }
+            
+            bool checkCollision(const  SDL_Rect& rect, const SDL_Rect& rect1) const{
+                return SDL_HasIntersection(&rect,&rect1) == SDL_TRUE;
+            }
 
+            void collisionDetect(const en::Enemy& enemy){
+                if(checkCollision(GetBoundingBox(),enemy.GetBoundingBox())){
+                    rect.x = x;
+                    rect.y = y;
+                }
             }
         
         private:
-            
+            int x;
+            int y;
             SDL_Rect rect;
             bool up;
             bool down;
-            bool x;
             bool pe;
             SDL_Renderer* renderer;
+            TTF_Font* font = TTF_OpenFont("fonts/MulaR-SemiLightItalic.otf",20);
     };
 }

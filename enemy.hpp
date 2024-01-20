@@ -10,7 +10,7 @@ namespace en{
                 down = false;
                 rect.h = 50;
                 rect.w = 30;
-                rect.x = 150;
+                rect.x = 600;
                 rect.y = 150;
             }
 
@@ -25,6 +25,10 @@ namespace en{
             void render(){
                 SDL_SetRenderDrawColor(renderer,255,0,0,255);
                 SDL_RenderFillRect(renderer,&rect);
+            }
+
+            SDL_Rect GetBoundingBox() const{
+                return rect;
             }
         
         private:
